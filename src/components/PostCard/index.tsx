@@ -1,14 +1,23 @@
 import { Link } from "react-router-dom"
 import { CardContainer } from "./styles"
+import { PostsInfo } from "../../contexts/BlogContext";
 
-export function PostCard(){
+interface PostProps{
+    post: PostsInfo;
+}
+
+
+export function PostCard({post}: PostProps){
+
+    const linkPost = `/post/${post.number}`
+
     return(
-        <Link to='/post/1'>
+        <Link to={linkPost}>
             <CardContainer>
                     <header>
-                        <h3>JavaScript data types and data structures</h3>
+                        <h3>{post.title}</h3>
 
-                        <time>Há 1 dia</time>
+                        <time>{post.created_at}</time>
                     </header>
 
                     <div>
