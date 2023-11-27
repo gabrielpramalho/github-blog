@@ -3,8 +3,12 @@ import * as z from 'zod';
 import { FormContainer } from "./styles";
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useContext } from 'react';
+import { BlogContext } from '../../contexts/BlogContext';
 
-
+interface SearchFormProps{
+    qtdPosts: number
+}
 
 const searchFormSchema = z.object({
     query: z.string(),
@@ -13,21 +17,23 @@ const searchFormSchema = z.object({
 
 type SearchFormInputs = z.infer<typeof searchFormSchema>
 
-export function SearchForm(){
+export function SearchForm({ qtdPosts }: SearchFormProps){
+
+    const { fetchSearch } = useContext(BlogContext)
 
     const {register, handleSubmit} = useForm<SearchFormInputs>({
         resolver: zodResolver(searchFormSchema),
     })
 
     function handleSearchPost(data: SearchFormInputs){
-        console.log(data)
+        fetchSearch(data.query)
     }
 
     return(
         <FormContainer onSubmit={handleSubmit(handleSearchPost)}>
             <div>
                 <span>Publicações</span>
-                 <span>6 publicações</span>
+                 <span>{qtdPosts} publicações</span>
             </div>
             <input 
                 type="text"

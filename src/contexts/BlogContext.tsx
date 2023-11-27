@@ -14,6 +14,7 @@ interface ProfileInfos{
 interface BlogContextType{
     profile: ProfileInfos | undefined
     posts: PostsInfo[]
+    fetchSearch: (query: string) => Promise<void>
 }
 
 interface BlogProviderProps{
@@ -42,10 +43,22 @@ export function BlogProvider({children}: BlogProviderProps){
 
     }
     async function fetchPosts(){
+        
         const response = await api.get('repos/gabrielpramalho/github-blog/issues')
+        
     
         setPosts(response.data)
 
+    }
+
+    async function fetchSearch(query: string) {
+        const response = await api.get('search/issues', {
+            params:{
+                q: `${query} repo:gabrielpramalho/github-blog`
+            }
+        })
+
+        setPosts(response.data.items)        
     }
 
     useEffect(() => {
@@ -58,6 +71,7 @@ export function BlogProvider({children}: BlogProviderProps){
             value={{
                 profile,
                 posts,
+                fetchSearch,
             }}
         >
             {children}

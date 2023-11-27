@@ -13,7 +13,7 @@ export function Blog(){
         <BlogContainer>
             <Profile />
 
-            <SearchForm />
+            <SearchForm qtdPosts={posts.length} />
 
 
             <PostsContainer>
