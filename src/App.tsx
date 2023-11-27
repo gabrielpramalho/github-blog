@@ -3,13 +3,16 @@ import { GlobalStyle } from "./styles/global"
 import { defaultTheme } from './styles/themes/defalt'
 import { BrowserRouter } from 'react-router-dom'
 import { Router } from './Router'
+import { BlogProvider } from './contexts/BlogContext'
 
 export function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <GlobalStyle />
       <BrowserRouter>
-        <Router />
+        <BlogProvider>
+          <Router />
+        </BlogProvider>
       </BrowserRouter>
     </ThemeProvider>
   )
